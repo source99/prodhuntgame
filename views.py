@@ -18,11 +18,15 @@ def test():
 #def get_posts(access_token):
 def get_posts():
     access_token = "bc944872f6210c7ed8abf75556d644469c6440d35ce60f7fa1a158daa4b92152"
+#    responses = self.make_request("GET", "posts", {"day": day}, context)
     args = {
-    'authorization': 'Bearer ' + access_token
+    'authorization': 'Bearer ' + access_token,
     }
+    date = {
+    'days_ago' : 1
+            }
     try:
-        r = requests.get("https://api.producthunt.com/v1/posts", headers=args)
+        r = requests.get("https://api.producthunt.com/v1/posts?%7B%7D=20", headers=args, data=date)
         print r
         posts = r.json()['posts']
         print posts[0]
@@ -42,9 +46,13 @@ def render_posts(posts):
     html = "<html style=background:white;font-size:24px><div>rendering posts</div></html>"
     html += "<br/>DICT BELOW <br/>"
     for post in posts:
-#        for k,v in post.items():
+        print post
+        #        for k,v in post.items():
 #            html += "key: %s  value: %s<br/>" % (k,v)
-        html += "<a href=\"{}\">name = {} : votes {}.</a>".format(post['redirect_url'],post['name'], post['votes_count'])
+#        print "<a href=\"{}\">name = {} : votes {}.</a>".format(post['redirect_url'].encode('utf-8'),post['name'].encode('utf-8'), post['votes_count'])
+
+
+        html += "<a href=\"{}\">name = {} : votes {}.</a>".format(post['redirect_url'],post['name'].encode('utf-8'), post['votes_count'])
         html += "<br/>"
     return html
 
